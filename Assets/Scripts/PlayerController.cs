@@ -1,39 +1,35 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
+public enum PaddleControl { Player1, Player2 }
+
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float speed = 10f;
-    private Rigidbody2D rb;
+    [SerializeField] private PaddleControl control = PaddleControl.Player1;
+    [SerializeField] private float speed = 8f;
+    [SerializeField] private float yLimit = 4f;
 
-    void Start()
+    private Rigidbody2D rb;
+    private PongControls controls;
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        if (rb == null) 
-        {
-            Debug.LogWarning("PlayerController butuh Rigidbody2D pada GameObject ini!");
-        }
+        controls = new PongControls();
     }
 
-    void FixedUpdate()
+    private void OnEnable()  => controls.Gameplay.Enable();
+    private void OnDisable() => controls.Gameplay.Disable();
+    private void OnDestroy() => controls.Dispose();
+
+    private void FixedUpdate()
     {
-        // Cegah NullReference jika perangkat keyboard belum terdeteksi
-        if (Keyboard.current == null || rb == null) return;
+        float input = control == PaddleControl.Player1
+            ? controls.Gameplay.Player1Move.ReadValue<float>()
+            : controls.Gameplay.Player2Move.ReadValue<float>();
 
-        float moveY = 0f;
-
-        // Input gerak atas dan bawah
-        if (Keyboard.current.wKey.isPressed || Keyboard.current.upArrowKey.isPressed)
-        {
-            moveY = 1f;
-        }
-        else if (Keyboard.current.sKey.isPressed || Keyboard.current.downArrowKey.isPressed)
-        {
-            moveY = -1f;
-        }
-
-        // Terapkan kecepatan vertikal (sumbu X tetap 0)
-        rb.linearVelocity = new Vector2(0f, moveY * speed);
-        // Catatan: Jika menggunakan Unity versi 2022 ke bawah, ubah 'linearVelocity' menjadi 'velocity'
+        float newY = rb.position.y + input * speed * Time.fixedDeltaTime;
+        newY = Mathf.Clamp(newY, -yLimit, yLimit);
+        rb.MovePosition(new Vector2(rb.position.x, newY));
     }
 }
