@@ -28,7 +28,7 @@ A classic 2D Pong game built in Unity with C#, featuring local two-player gamepl
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-username>/<your-repo-name>.git
+   git clone https://github.com/RaydenXVII/Pong-Game.git
    ```
 2. Open Unity Hub, click **Add** > **Add project from disk**, and select the cloned folder.
 3. Open the project with a compatible Unity version.
