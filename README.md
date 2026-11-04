@@ -2,10 +2,6 @@
 
 A classic 2D Pong game built in Unity with C#, featuring local two-player gameplay on a single keyboard.
 
-<!-- Add a screenshot or GIF of your game here:
-![Gameplay screenshot](Screenshots/gameplay.png)
--->
-
 ## Features
 
 - Local two-player multiplayer on one keyboard
@@ -85,8 +81,7 @@ Assets/
 ## Author
 
 **Randy Deniz Manzarasi**
-Software Engineering student, Universitas Telkom Surabaya
 
 ## License
 
-This project is open source. Add a license of your choice (for example [MIT](https://choosealicense.com/licenses/mit/)) by creating a `LICENSE` file in the repository root.
+This project is open source.
